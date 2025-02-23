@@ -7,7 +7,7 @@ class WeatherForecastController < ApplicationController
 
 
   def search
-    # We will search the Weather forecast
+    # We will search the Weather forecast, the priority is given to zip code, if zip code present then first look city for the given zip code values
     if @zip_code.present?
       @weather = WeatherReport.find_by_zipcode(@zip_code)
     elsif @city.present?
@@ -15,8 +15,6 @@ class WeatherForecastController < ApplicationController
     else
       @weather = nil
     end
-
-    puts "#{@weather}"
 
     if @weather
       render json: @weather
