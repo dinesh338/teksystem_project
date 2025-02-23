@@ -1,0 +1,49 @@
+<h1>Search Weather Forecast</h1>
+
+<%= form_with url: weather_forecast_search_path, method: :get, local: true do |f| %>
+<table>
+	<tr>
+		<td><%= f.label :street, "Street" %></td>
+		<td><%= f.text_field :street %></td>
+	</tr>
+	<tr>
+		<td><%= f.label :city, "City" %></td>
+		<td><%= f.text_field :city %> </td> <%# Only this field is required for search %>
+	</tr>
+	<tr>
+		<td><%= f.label :state, "State" %></td>
+		<td><%= f.text_field :state %> </td> 
+	</tr>
+	<tr>
+		<td><%= f.label :zip_code, "Zip Code" %></td>
+		<td><%= f.text_field :zip_code %> </td> 
+	</tr>
+	<tr>
+		<td></td>
+		<td><%= f.submit "Get Weather" %> </td> 
+	</tr>
+</table>
+<% end %>
+
+<div id="weather-result"></div>
+
+<script>
+  document.querySelector("form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const city = document.querySelector("input[name='city']").value;
+    const zip_code = document.querySelector("input[name='zip_code']").value;
+    fetch(`/weather_forecast/search?city=${city}&zip_code=${zip_code}`)
+      .then(response => response.json())
+      .then(data => {
+        const resultDiv = document.getElementById("weather-result");
+        if (data.error) {
+          resultDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
+        } else {
+          resultDiv.innerHTML = `<p><strong>Temperature:</strong> ${data.currrent_temperature}</p>
+          						 <p><strong>Temperature (Min/High):</strong> ${data.min_temperature}/${data.max_temperature}</p>
+                                 <p><strong>Condition:</strong> ${data.condition}</p>`;
+        }
+      });
+  });
+</script>
