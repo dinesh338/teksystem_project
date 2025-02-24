@@ -1,6 +1,6 @@
 class WeatherForecastController < ApplicationController
 
-  before_action :set_instance_variables
+  before_action :set_instance_variables, only: [:search]
 
   def new
   end
@@ -27,6 +27,6 @@ class WeatherForecastController < ApplicationController
 
   def set_instance_variables
     @zip_code = params[:zip_code]
-    @city = params[:city]
+    @city = params[:city]&.downcase
   end
 end
