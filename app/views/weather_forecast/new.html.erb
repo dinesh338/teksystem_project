@@ -40,9 +40,11 @@
         if (data.error) {
           resultDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
         } else {
-          resultDiv.innerHTML = `<p><strong>Temperature:</strong> ${data.currrent_temperature}</p>
-          						 <p><strong>Temperature (Min/High):</strong> ${data.min_temperature}/${data.max_temperature}</p>
-                                 <p><strong>Condition:</strong> ${data.condition}</p>`;
+          resultDiv.innerHTML = `<p><strong>Temperature Details for the City ${data.city}:</strong></p>
+          <p><strong>Temperature:</strong> ${data.currrent_temperature}</p>
+          						 <p><strong>Temperature (Low/High):</strong> ${data.min_temperature}/${data.max_temperature}</p>
+                                 <p><strong>Condition:</strong> ${data.condition}</p>
+                                 ${data.cached_info ? `<p style="color:red;">Data fetched from cache</p>` : ''}`;
         }
       });
   });
